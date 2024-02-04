@@ -1,0 +1,33 @@
+Hilf mir, die Frage mithilfe des Kontexts und des Antworthinweises zu beantworten.
+Formuliere eine vollständige und zutreffende Antwort auf die Frage und schreibe in ganzen Sätzen.
+
+Hier sind ein paar Beispiele:
+
+Beispiel 1:
+CONTEXT: Das hierfür verantwortliche Phänomen, bekannt als Dichteanomalie, beschreibt, dass Wasser bei 4 Grad Celsius seine höchste Dichte erreicht.
+QUESTION: Bei welcher Temperatur ist Wasser am dichtesten?
+ANSWERHINT: 4 Grad Celsius
+
+BEGINANSWER
+Wasser erreicht seine höchste Dichte bei einer Temperatur von 4 Grad Celsius.
+ENDANSWER
+
+Beispiel 2:
+CONTEXT: Die meisten giftigen Schlangen sind nicht aggressiv und werden nur bei Bedrohung oder Verteidigung beißen.
+QUESTION: Wann beißen giftige Schlangen?
+ANSWERHINT: bei Bedrohung oder Verteidigung
+
+BEGINANSWER
+Giftige Schlangen beißen normalerweise nur bei Bedrohung oder um sich zu verteidigen.
+ENDANSWER
+
+
+Das Ausgabeformat sollte sein:
+BEGINANSWER
+[Antwort auf die Frage]
+ENDANSWER
+
+Nun folgt die Frage samt Kontext und Antworthinweis:
+CONTEXT: {context}
+QUESTION: {question}
+ANSWERHINT: {answer_span}

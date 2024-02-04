@@ -1,0 +1,112 @@
+### Adapted from https://github.com/jondurbin/airoboros
+# The model to use in generation.  Available models: https://platform.openai.com/docs/models/continuous-model-upgrades
+model: "gpt-4"
+# model: "YOUR_FAVORITE_MODEL" # you can change base_url in `airoboros/self_instruct.py`
+  
+# OpenAI API key (if null, uses environment variable OPENAI_API_KEY)
+openai_api_key:
+
+# Optionally configure the OpenAI organization ID.
+organization_id:
+
+# Combined output file path.
+output_path: instructions.jsonl
+
+# Path to the default topics file.
+topics_path: topics.txt
+
+# Overwrite the output file, use with care!
+overwrite: false
+
+# Append to the output file.
+append: true
+
+# Embedding model, for calculating similarity between documents; probably best left as-is since the code is fairly specific to this one.
+#embedding_model: thenlper/gte-small
+embedding_model: intfloat/multilingual-e5-small
+embedding_device: cpu
+# If you have a GPU, set this to "cuda", e.g.:
+# embedding_device: cuda
+
+# Topic avoidance prompt string.
+topic_avoidance: Vermeide jegliche Aufgaben, die mit DEI (Diversität, Gleichheit, Inklusion), Geschlecht und/oder Sex, Religion, Rasse, Ethnizität, oder irgendeinem Thema, auf das du wahrscheinlich nicht antworten würdest, zusammenhängen. Oder auch Aufgaben, auf die ein Sprachmodell nicht antworten könnte, zum Beispiel Aufgaben über Emotionen, Gefühle, körperliche Sinne, etc.
+
+# Regexes used to filter responses, mostly common words and phrases used in refusals.
+response_filters:
+  - "my programming"
+  - "openai"
+  - "language model"
+  - "large language"
+  - "as an? (ai|generative language|gpt|bot)"
+  - "illegal and dangerous"
+  - "i do(n't| not) (possess|have|exhibit) (personal|consciousness|subjective)"
+  - "personal (feelings|thoughts|emotions|desires|experiences|goals|objective|belief)"
+  - "(can('t| ?not)|w(on't|will not)|unable.?) (\\w+\\s)+(with (that|your)|your \\w+|provide)"
+  - "my limitations"
+  - "the limitations of my"
+  - "my abilities"
+  - "violates my"
+  - "i (can('t| ?not)|w(on't|will not)|am (not |un)able.?).{0,30}(you are|you're|your )"
+  - "please note that"
+  - "flesch"
+  - "Als KI-Assistent"
+  - "Entschuldigung, aber"
+  - "respektvoll und sicher"
+  - "verstößt gegen meine Nutzungsvorschriften"
+
+# Optionally limit the maximum number of tokens to use when generating instructions.
+max_tokens:
+
+# Minimum similarity score when checking for duplicates.
+min_docsearch_score: 0.07
+
+# Default OpenAI API request parameters.
+api_params:
+  temperature: 0.7
+  top_p: 0.5
+  frequency_penalty: 0.0
+  presence_penalty: 2
+
+# Topic generation prompt.
+topic_prompt: Erstelle eine Liste von 20 komplett zufälligen Themen. {topic_avoidance}
+topic_request_count: 0
+
+# Default count per generator, if not specified.
+default_count: 1
+
+# Default batch size, if not specified.
+# default_batch_size: 10
+default_batch_size: 1
+
+# Default readability score hint: https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests
+default_flesch: Die Ausgabe sollte so verfasst sein, dass sie einen Wiener Sachtextformel-Wert von 15 oder höher bzw. einen Flesch-Kincaid-Lesbarkeitswert von 30 oder niedriger aufweist - am besten verständlich für Personen mit Hochschulbildung. Die Antwort darf keine Notizen oder Informationen über Flesch-Kincaid-Werte oder die Wiener Sachtextformel enthalten.
+
+# Language.
+language: Deutsch
+
+# Individual instructor configurations.
+instructors:
+
+  ##################################################################################
+  # Augment answer spans in GermanDPR to whole sentences.
+  germandpr:
+    api_params:
+      temperature: 0.5
+    count: 2249
+    batch_size: 1
+    min_docsearch_score: 0.05
+
+  ##################################################################################
+  ### KEEP THIS! ###
+  # Character cards - these aren't used directly, they are stored in output_dir, and
+  # used by the chat instructor, stylized response, etc.
+  character:
+    api_params:
+      temperature: 0.9
+    # count: 5
+    count: 0
+    # batch_size: 2
+    batch_size: 0
+    min_docsearch_score: 0.1
+    seed_path: character_seeds
+    output_dir: characters

@@ -1,0 +1,6 @@
+datasets
+spacy
+tiktoken
+openai
+pydantic
+instructor
